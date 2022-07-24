@@ -8,6 +8,7 @@ import pytest
 from git_analyzer.github import Download
 
 
+@pytest.mark.downloads
 class TestDownload:
     """ Test Download Class """
 
