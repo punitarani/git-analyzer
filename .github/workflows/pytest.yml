@@ -3,6 +3,9 @@
 
 name: pytest
 
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 on:
   push:
     branches: [ "master" ]
