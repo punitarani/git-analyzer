@@ -7,12 +7,12 @@ from git_analyzer.github import GitHub
 
 
 class TestGitHub:
-    """ Test GitHub Class """
+    """Test GitHub Class"""
 
-    linux_url = 'https://api.github.com/repos/torvalds/linux'
+    linux_url = "https://api.github.com/repos/torvalds/linux"
 
     def test_init(self):
-        """ Test Initialization """
+        """Test Initialization"""
 
         github = GitHub()
         assert github is not None
@@ -22,15 +22,15 @@ class TestGitHub:
         assert github.ratelimit_limit == -1
 
     def test_build_headers(self):
-        """ Test build_headers """
+        """Test build_headers"""
 
         github = GitHub()
         assert github.build_headers() is not None
-        assert 'Accept' in github.headers
-        assert 'Authorization' in github.headers
+        assert "Accept" in github.headers
+        assert "Authorization" in github.headers
 
     def test_get(self):
-        """ Test get """
+        """Test get"""
 
         github = GitHub()
         assert github.get(self.linux_url) is not None
@@ -40,7 +40,7 @@ class TestGitHub:
 
     @pytest.mark.asyncio
     async def test_get_async(self):
-        """ Test get_async """
+        """Test get_async"""
 
         github = GitHub()
 

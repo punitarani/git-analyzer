@@ -12,12 +12,7 @@ from .github import GitHub
 class Commit(GitHub):
     """Commit"""
 
-    def __init__(
-            self,
-            url: str,
-            sha: str = None,
-            auto_get: bool = True
-    ):
+    def __init__(self, url: str, sha: str = None, auto_get: bool = True):
         """
         Constructor
 
@@ -231,9 +226,7 @@ class Commit(GitHub):
         return files_df
 
     async def save_async(
-            self,
-            session: aiohttp.ClientSession,
-            overwrite: bool = False
+        self, session: aiohttp.ClientSession, overwrite: bool = False
     ) -> Path:
         """
         Save the changes dataframe to a parquet file

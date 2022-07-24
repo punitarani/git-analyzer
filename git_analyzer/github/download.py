@@ -12,16 +12,16 @@ from .repository import Repository, RepositoryNotFoundError
 
 
 class Download:
-    """ Download Commit Data """
+    """Download Commit Data"""
 
     data_dir = Path(__file__).parent.parent.parent.joinpath("data")
-    encoding_csv = 'utf-8-sig'
+    encoding_csv = "utf-8-sig"
 
     def __init__(
-            self,
-            owner: str,
-            name: str,
-            number_of_commits: int = 1000,
+        self,
+        owner: str,
+        name: str,
+        number_of_commits: int = 1000,
     ):
         """
         Constructor
@@ -66,20 +66,17 @@ class Download:
 
         # Get the commits
         commits = asyncio.run(
-            self.repository.get_commits_async(
-                max_pages=self.num_pages
-            )
+            self.repository.get_commits_async(max_pages=self.num_pages)
         )
 
         # Cache the commits_df
-        self.commits_df = commits.iloc[:self.num_commits]
+        self.commits_df = commits.iloc[: self.num_commits]
 
         # Return the commits
-        return commits.iloc[:self.num_commits]
+        return commits.iloc[: self.num_commits]
 
     async def get_commits_df_async(
-            self,
-            session: aiohttp.ClientSession | None = None
+        self, session: aiohttp.ClientSession | None = None
     ) -> pd.DataFrame:
         """
         Get the latest commits from the repository
@@ -97,15 +94,14 @@ class Download:
 
         # Get the commits
         commits = await self.repository.get_commits_async(
-            session=session,
-            max_pages=self.num_pages
+            session=session, max_pages=self.num_pages
         )
 
         # Cache the commits_df
-        self.commits_df = commits.iloc[:self.num_commits]
+        self.commits_df = commits.iloc[: self.num_commits]
 
         # Return the commits
-        return commits.iloc[:self.num_commits]
+        return commits.iloc[: self.num_commits]
 
     def download_commits(self, overwrite: bool = False) -> Path:
         """
@@ -139,11 +135,7 @@ class Download:
 
             try:
                 # Create a commit object and download the commit
-                commit = Commit(
-                    url=commit_url,
-                    sha=commit["sha"],
-                    auto_get=False
-                )
+                commit = Commit(url=commit_url, sha=commit["sha"], auto_get=False)
 
                 # Save the commit
                 filepath = commit.save(overwrite=overwrite)
@@ -152,7 +144,7 @@ class Download:
                 saved_files.append(filepath)
             # Empty commit
             except KeyError:
-                print(f'{index}\t - Error downloading commit {commit_url}')
+                print(f"{index}\t - Error downloading commit {commit_url}")
 
         # Update the index file
         index_path = self.save_index(self.commits_df)
@@ -160,9 +152,7 @@ class Download:
         return index_path
 
     async def download_commits_async(
-            self,
-            session: aiohttp.ClientSession,
-            overwrite: bool = False
+        self, session: aiohttp.ClientSession, overwrite: bool = False
     ) -> Path:
         """
         Download the commits asynchronously to the data folder.
@@ -197,24 +187,17 @@ class Download:
 
             try:
                 # Create a commit object and download the commit
-                commit = Commit(
-                    url=commit_url,
-                    sha=commit["sha"],
-                    auto_get=False
-                )
+                commit = Commit(url=commit_url, sha=commit["sha"], auto_get=False)
 
                 # Save the commit
-                filepath = await commit.save_async(
-                    session=session,
-                    overwrite=overwrite
-                )
+                filepath = await commit.save_async(session=session, overwrite=overwrite)
                 await asyncio.sleep(0)
 
                 # Add the filepath to the list
                 saved_files.append(filepath)
             # Empty commit
             except KeyError:
-                print(f'{index}\t - Error downloading commit {commit_url}')
+                print(f"{index}\t - Error downloading commit {commit_url}")
 
         # Update the index file
         index_path = self.save_index(self.commits_df)

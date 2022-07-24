@@ -10,43 +10,43 @@ from git_analyzer.github import Download
 
 @pytest.mark.downloads
 class TestDownload:
-    """ Test Download Class """
+    """Test Download Class"""
 
     num_commits = 100
-    download = Download('torvalds', 'linux', num_commits)
+    download = Download("torvalds", "linux", num_commits)
 
     def test_init(self):
-        """ Test Initialization """
+        """Test Initialization"""
 
         download = self.download
         assert download is not None
-        assert download.owner == 'torvalds'
-        assert download.repo == 'linux'
+        assert download.owner == "torvalds"
+        assert download.repo == "linux"
         assert download.num_commits == self.num_commits
         assert download.num_pages == 1
 
     def test_get_commits(self):
-        """ Test get_commits_df """
+        """Test get_commits_df"""
 
         download = self.download
         download.get_commits_df()
         assert download.commits_df is not None
         assert download.commits_df.shape[0] == self.num_commits
         assert download.commits_df.columns.tolist() == [
-            'sha',
-            'node_id',
-            'commit',
-            'url',
-            'html_url',
-            'comments_url',
-            'author',
-            'committer',
-            'parents'
+            "sha",
+            "node_id",
+            "commit",
+            "url",
+            "html_url",
+            "comments_url",
+            "author",
+            "committer",
+            "parents",
         ]
 
     @pytest.mark.asyncio
     async def test_get_commits_session(self):
-        """ Test get_commits_df() with session input """
+        """Test get_commits_df() with session input"""
 
         download = self.download
 
@@ -56,20 +56,20 @@ class TestDownload:
         assert download.commits_df is not None
         assert download.commits_df.shape[0] == self.num_commits
         assert download.commits_df.columns.tolist() == [
-            'sha',
-            'node_id',
-            'commit',
-            'url',
-            'html_url',
-            'comments_url',
-            'author',
-            'committer',
-            'parents'
+            "sha",
+            "node_id",
+            "commit",
+            "url",
+            "html_url",
+            "comments_url",
+            "author",
+            "committer",
+            "parents",
         ]
 
     @pytest.mark.slow
     def test_download_commits(self):
-        """ Test download_commits() """
+        """Test download_commits()"""
 
         download = self.download
         download.download_commits(overwrite=False)
@@ -78,13 +78,13 @@ class TestDownload:
         commits_df = download.commits_df
 
         # Iterate over the file paths and verify they exist
-        for sha in commits_df['sha']:
-            file_path = download.directory.joinpath(sha + '.parquet')
+        for sha in commits_df["sha"]:
+            file_path = download.directory.joinpath(sha + ".parquet")
             assert Path(file_path).exists()
 
     @pytest.mark.asyncio
     async def test_download_commits_async(self):
-        """ Test download_commits_async() """
+        """Test download_commits_async()"""
 
         download = self.download
         async with aiohttp.ClientSession() as session:
@@ -94,12 +94,12 @@ class TestDownload:
         commits_df = download.commits_df
 
         # Iterate over the file paths and verify they exist
-        for sha in commits_df['sha']:
-            file_path = download.directory.joinpath(sha + '.parquet')
+        for sha in commits_df["sha"]:
+            file_path = download.directory.joinpath(sha + ".parquet")
             assert Path(file_path).exists()
 
     def test_get_index(self):
-        """ Test get_index() """
+        """Test get_index()"""
 
         # Download the latest commit
         download = self.download
@@ -111,5 +111,5 @@ class TestDownload:
         assert index.shape[1] == 9
 
         # Verify index is up-to-date
-        num_files = len(list(Path(download.directory).glob('*.parquet')))
+        num_files = len(list(Path(download.directory).glob("*.parquet")))
         assert index.shape[0] == num_files

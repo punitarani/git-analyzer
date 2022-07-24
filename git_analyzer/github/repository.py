@@ -1,6 +1,4 @@
-"""
-GitHub Repository Class File
-"""
+""" GitHub Repository Class File """
 
 import asyncio
 
@@ -104,9 +102,7 @@ class Repository(GitHub):
         return df
 
     async def get_commits_async(
-            self,
-            max_pages: int = 1,
-            session: aiohttp.ClientSession | None = None
+        self, max_pages: int = 1, session: aiohttp.ClientSession | None = None
     ) -> pd.DataFrame:
         """
         Get the commits of the repository asynchronously

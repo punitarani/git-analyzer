@@ -1,6 +1,4 @@
-"""
-github
-"""
+""" git_analyzer.github """
 
 from .commit import Commit
 from .download import Download

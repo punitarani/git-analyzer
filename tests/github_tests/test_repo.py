@@ -10,24 +10,24 @@ from git_analyzer.github.repository import Repository
 
 
 class TestRepository:
-    """ Test Repository Class """
+    """Test Repository Class"""
 
-    repo = Repository('torvalds', 'linux')
+    repo = Repository("torvalds", "linux")
 
     def test_init(self):
-        """ Test Initialization """
+        """Test Initialization"""
 
         repo = self.repo
 
         assert repo is not None
         assert isinstance(repo.token, str)
-        assert 'Accept' in repo.headers
+        assert "Accept" in repo.headers
 
     def test_exists(self):
-        """  Test if repository exists """
+        """Test if repository exists"""
 
         repo = self.repo
-        assert repo.url == 'https://api.github.com/repos/torvalds/linux'
+        assert repo.url == "https://api.github.com/repos/torvalds/linux"
         assert repo.exists is True
 
         # Check get() method is working
@@ -35,17 +35,17 @@ class TestRepository:
         assert repo.ratelimit_remaining > 0
 
     def test_token_valid(self):
-        """ Test if token is valid and working """
+        """Test if token is valid and working"""
 
         repo = self.repo
-        assert 'Authorization' in repo.headers
+        assert "Authorization" in repo.headers
         assert repo.exists is True
 
         # Verify ratelimit is 5000
         assert repo.ratelimit_limit == 5000
 
     def test_get_commits(self):
-        """ Test get_commits """
+        """Test get_commits"""
 
         repo = self.repo
 
@@ -56,7 +56,7 @@ class TestRepository:
 
     @pytest.mark.slow
     def test_get_commits_multiple_pages(self):
-        """ Test get_commits with multiple num_pages """
+        """Test get_commits with multiple num_pages"""
 
         repo = self.repo
 
@@ -67,7 +67,7 @@ class TestRepository:
 
     @pytest.mark.asyncio
     async def test_get_commits_async(self):
-        """ Test get_commits_async """
+        """Test get_commits_async"""
 
         repo = self.repo
 
@@ -78,7 +78,7 @@ class TestRepository:
 
     @pytest.mark.asyncio
     async def test_get_commits_async_multiple_pages(self):
-        """ Test get_commits_async with multiple num_pages """
+        """Test get_commits_async with multiple num_pages"""
 
         repo = self.repo
 
@@ -89,7 +89,7 @@ class TestRepository:
 
     @pytest.mark.asyncio
     async def test_get_commits_async_session(self):
-        """ Test get_commits_async with session input """
+        """Test get_commits_async with session input"""
 
         repo = self.repo
 

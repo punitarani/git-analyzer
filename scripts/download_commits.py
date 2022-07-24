@@ -73,7 +73,7 @@ async def main():
     # Create downloading animation
     downloading_str = f"\nDownloading the latest {num_commits} Commits..."
     print(downloading_str)
-    print("-" * (len(downloading_str)-1))
+    print("-" * (len(downloading_str) - 1))
 
     # Download the commits asynchronously
     async with aiohttp.ClientSession() as session:
