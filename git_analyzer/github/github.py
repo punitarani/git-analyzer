@@ -1,9 +1,17 @@
 """ GitHub Base Class File """
 
+import asyncio
 import os
+import sys
 
 import aiohttp
 import requests
+
+
+# Set asyncio event loop policy to WindowsSelectorEventLoopPolicy
+if sys.platform == 'win32':
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+# Avoids "RuntimeError: Event loop is already running"
 
 
 class GitHub:
