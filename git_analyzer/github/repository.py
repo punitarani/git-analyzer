@@ -9,10 +9,6 @@ import pandas as pd
 
 from .github import GitHub
 
-# Set asyncio event loop policy to WindowsSelectorEventLoopPolicy
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-# Avoids "RuntimeError: Event loop is already running"
-
 
 class Repository(GitHub):
     """GitHub Repository"""
